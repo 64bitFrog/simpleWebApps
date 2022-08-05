@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Math Whizz!</title>
+	<meta name="viewport" content="height=device-height,width=device-width, initial-scale=1.0" />
+	<link href="mathwhizz.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<header>
+	<h1>Math Whizz!</h1>
+</header>
+<main>
+	
+	<div id="solutionPanel">
+		<p id="question">Upgrade your browser or turn on javascript.</p>
+		<div class="btn-group">
+			<button class="button" onclick="checkSolution(this)" id="option1" value="20">50</button>
+			<button class="button" onclick="checkSolution(this)" id="option2" value="30">60</button>
+			<button class="button" onclick="checkSolution(this)" id="option3" value="40">70</button>
+		</div>
+	</div>
+
+	
+	<div id="centerNextButton">
+		<p class="correct" id="yourAnswerStatus"></p> 
+		<button id="newQuestion" type="button" onclick="newQuestion()">Next!</button>
+	</div>
+	<div id ="progressBar">
+		<button class="progressNeutral" id="progressBar1"></button>
+		<button class="progressNeutral" id="progressBar2"></button>
+		<button class="progressNeutral" id="progressBar3"></button>
+		<button class="progressNeutral" id="progressBar4"></button>
+		<button class="progressNeutral" id="progressBar5"></button>
+		<button class="progressCorrect" id="progressBar6"></button>
+		<button class="progressNeutral" id="progressBar7"></button>
+		<button class="progressNeutral" id="progressBar8"></button>
+		<button class="progressStumble" id="progressBar9"></button>
+		<button class="progressNeutral" id="progressBar10"></button>
+		<!--<p id="progress">&nbsp;</p>-->
+	</div>
+	<div id="endGamePanel">
+		<hr>
+		<p id="gameOver"><p>
+		<button id="newGame" type="button" onclick="newGame()">Play Again!</button>
+	</div>
+</main>	
+	<script src="mathwhizz.js"></script>
+</body>
+</html>

@@ -1,7 +1,5 @@
 'use strict'
 
-var x =0;
-var y =0;
 var answer = 0;
 var questionCount;
 var questionsCorrect;
@@ -11,6 +9,13 @@ const max_questions = 10;
 const auFart = new Audio('audio/fartToot.mp3');
 const auCorrectCymbal = new Audio('audio/correctCymbal.mp3');
 const auCheer = new Audio('audio/crowd.mp3');
+
+// not sure if enums are a javascript thing yet - so use old-skool consts
+// and pretend we can't see these values
+const opMultiplication = 1;
+const opDivision = 2;
+const opAddition = 3;
+const opSubtraction = 4;
 
 const positiveMessages = [
 "Yes. Keep going!",
@@ -52,29 +57,63 @@ function finishGame(){
 	document.getElementById('gameOver').innerHTML = finishMessage; 
 }
 
-function newQuestion(){
-	x = Math.ceil(Math.random()*10);
-	y =	Math.ceil(Math.random()*10);
-	answer = (x * y).toString();
+function generateRandomSolution(operation){
+	var solution = 0;
+	switch(operation){
+		case opMultiplication:
+			solution = Math.ceil(Math.random()*10) * Math.ceil(Math.random()*10);
+			break;
+		case opDivision:
+			solution = Math.ceil(Math.random()*10);
+			break;
+	}
+	return solution;
+}
 
-	// Question shown to victim
-	document.getElementById('question').innerHTML = `${x} X ${y} =`; 
+function newQuestion(){
+	var operandOne = Math.ceil(Math.random()*10);
+	var operandTwo = Math.ceil(Math.random()*10);
+	
+	//let operation = opMultiplication;
+	let operation = Math.ceil(Math.random()*2); // <- not best practice but will do for now
+	var opSymbol = ''
+	
+	
+	switch(operation){
+		case opMultiplication: 
+			answer = (operandOne * operandTwo).toString();
+			opSymbol = 'X';	
+			break;
+		case opDivision: 
+			// Fractions not allowed so find answer and swap with operand.
+			answer = (operandOne * operandTwo);
+			[answer, operandOne] = [operandOne, answer];
+			answer = answer.toString();
+			opSymbol = '&div;';
+			break;
+	}
+			
+	
+	// Show question 
+	document.getElementById('question').innerHTML = `${operandOne} ${opSymbol} ${operandTwo} =`; 
 	
 	const solutions = [];	
 	// Make sure at least one of the solutions is the actual answer
-	// The array will be sorted 'randomly' afterwards
+	// The array will be sorted randomly afterwards
 	solutions[0] = answer;
 	
 	for(let i = 1; i < 3; i++){
 		while(1){
-			// Create a new random number that doesn't already exist in the list
-			let nextAnswer = Math.ceil(Math.random()*10) * Math.ceil(Math.random()*10);
+			// Create a new random answer that doesn't already exist in the list
+			//let nextAnswer = Math.ceil(Math.random()*10) * Math.ceil(Math.random()*10).toString();
+			var nextAnswer = generateRandomSolution(operation).toString();
 			if(!solutions.includes(nextAnswer)){
 				solutions[i] = nextAnswer;
 				break;
 			}
 		}
 	}
+	
 	// sort the array randomly so the correct solution isnt always first
 	solutions.sort(function(a, b){return 0.5 - Math.random()});
 	
@@ -127,10 +166,5 @@ function checkSolution(e){
 		yas.setAttribute("class","incorrectAnswer");
 		if(playSounds)auFart.play();
 		document.getElementById(`progressBar${questionCount}`).className = "progressError";
-	}
-	 
-	//document.getElementById('progress').innerHTML = 
-	//console.log(`QuestionCount:${questionCount}, Correct:${questionsCorrect}`); 
-	
-	
+	} 
 }

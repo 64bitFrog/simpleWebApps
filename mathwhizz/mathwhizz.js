@@ -73,11 +73,8 @@ function generateRandomSolution(operation){
 function newQuestion(){
 	var operandOne = Math.ceil(Math.random()*10);
 	var operandTwo = Math.ceil(Math.random()*10);
-	
-	//let operation = opMultiplication;
 	let operation = Math.ceil(Math.random()*2); // <- not best practice but will do for now
 	var opSymbol = ''
-	
 	
 	switch(operation){
 		case opMultiplication: 
@@ -105,7 +102,6 @@ function newQuestion(){
 	for(let i = 1; i < 3; i++){
 		while(1){
 			// Create a new random answer that doesn't already exist in the list
-			//let nextAnswer = Math.ceil(Math.random()*10) * Math.ceil(Math.random()*10).toString();
 			var nextAnswer = generateRandomSolution(operation).toString();
 			if(!solutions.includes(nextAnswer)){
 				solutions[i] = nextAnswer;
@@ -113,7 +109,6 @@ function newQuestion(){
 			}
 		}
 	}
-	
 	// sort the array randomly so the correct solution isnt always first
 	solutions.sort(function(a, b){return 0.5 - Math.random()});
 	
